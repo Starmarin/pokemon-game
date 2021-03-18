@@ -1,12 +1,14 @@
 import bg from '../../assets/bg1.jpg';
 import logoIMG from '../../assets/pokemon_PNG98.png';
-import './app.css';
-import Header from '../Header';
-import Layout from '../Layout';
-import Footer from '../Footer';
-import PokemonCard from '../PokemonCard';
 
-function App() {
+import Header from '../../components/Header';
+import Layout from '../../components/Layout';
+import Footer from '../../components/Footer';
+import PokemonCard from '../../components/PokemonCard';
+import MenuHeader from '../../components/MenuHeader';
+import './home.css';
+
+function HomePage({ onChangePage }) {
     const POKEMONS = [
         {
             "abilities": [
@@ -141,11 +143,16 @@ function App() {
             }
         }
     ]
+    const handlerClickButton = (page) => {
+        onChangePage && onChangePage(page)
+    }
     return (
         <>
+            <MenuHeader />
             <Header
                 title="Pokemon Game"
                 descr="You should try!"
+                onClickButton={handlerClickButton}
             />
             <Layout
                 title="Rules"
@@ -165,6 +172,7 @@ function App() {
                         POKEMONS.map(i =>
                             <PokemonCard
                                 key={i.id}
+                                id={i.id}
                                 name={i.name}
                                 img={i.img}
                                 type={i.type}
@@ -182,4 +190,4 @@ function App() {
     );
 }
 
-export default App;
+export default HomePage;
