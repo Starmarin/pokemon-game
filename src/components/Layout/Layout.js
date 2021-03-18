@@ -1,18 +1,22 @@
+import cn from 'classnames';
 import style from './layout.module.css';
 
-function Layout({ title, descr, colorBg, urlBg }) {
-    const background = colorBg ? { backgroundColor: colorBg } : { background: `url(${urlBg})`, backgroundSize: 'cover' };
+function Layout({ title, colorBg, urlBg, children }) {
+
+    const s = {};
+    if (urlBg) { s.backgroundImage = `url(${urlBg})`; s.backgroundSize = 'cover'; }
+    if (colorBg) { s.backgroundColor = colorBg }
     return (
         <section className={style.root}
-            style={background}>
+            style={s}>
             <div className={style.wrapper}>
                 <article>
                     <div className={style.title}>
                         {title && <h3>{title}</h3>}
                         <span className={style.separator}></span>
                     </div>
-                    <div className={`${style.desc} ${style.full}`}>
-                        {descr && <p>{descr}</p>}
+                    <div className={cn(style.desc, style.full)}>
+                        {children && children}
                     </div>
                 </article>
             </div>
