@@ -8,9 +8,9 @@ import Contact from "./routes/Contact";
 import About from "./routes/About";
 import NotFound from "./routes/NotFound";
 
-
 import cn from 'classnames';
 import style from './style.module.css';
+
 
 function App() {
     const match = useRouteMatch('/');
