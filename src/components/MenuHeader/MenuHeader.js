@@ -2,17 +2,17 @@ import { useState } from 'react'
 import Menu from "../Menu";
 import Navbar from "../Navbar";
 
-function MenuHeader() {
-    const [isOpenMenu, setOpenMenu] = useState(false);
+function MenuHeader({ bgActive }) {
+    const [isOpenMenu, setOpenMenu] = useState(null);
 
     const onClickMenu = () => {
-        setOpenMenu(!isOpenMenu)
+        setOpenMenu(prevState => !prevState);
     }
 
     return (
         <>
-            <Menu isOpenMenu={isOpenMenu} />
-            <Navbar isOpenMenu={isOpenMenu} onClickMenu={onClickMenu} />
+            <Menu isOpenMenu={isOpenMenu} onClickMenu={onClickMenu} />
+            <Navbar isOpenMenu={isOpenMenu} bgActive={bgActive} onClickMenu={onClickMenu} />
         </>
     )
 }

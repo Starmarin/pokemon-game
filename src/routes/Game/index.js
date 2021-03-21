@@ -1,2 +1,2 @@
-import GamePage from './GamePage';
-export default GamePage;
+import Game from './Game';
+export default Game;

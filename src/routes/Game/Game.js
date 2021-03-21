@@ -1,15 +1,11 @@
-import bg from '../../assets/bg1.jpg';
-import logoIMG from '../../assets/pokemon_PNG98.png';
+import { useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import PokemonCard from "../../components/PokemonCard";
 
-import Header from '../../components/Header';
-import Layout from '../../components/Layout';
-import Footer from '../../components/Footer';
-import PokemonCard from '../../components/PokemonCard';
-import MenuHeader from '../../components/MenuHeader';
-import './home.css';
+import style from './game.module.css';
 
-function HomePage({ onChangePage }) {
-    const POKEMONS = [
+function Game() {
+    const [Pokemons, setPokemons] = useState([
         {
             "abilities": [
                 "keen-eye",
@@ -35,7 +31,8 @@ function HomePage({ onChangePage }) {
                 "right": 2,
                 "bottom": 7,
                 "left": 5
-            }
+            },
+            "active": false
         },
         {
             "abilities": [
@@ -62,7 +59,8 @@ function HomePage({ onChangePage }) {
                 "right": 9,
                 "bottom": "A",
                 "left": "A"
-            }
+            },
+            "active": false
         },
         {
             "abilities": [
@@ -88,7 +86,8 @@ function HomePage({ onChangePage }) {
                 "right": "A",
                 "bottom": 9,
                 "left": 6
-            }
+            },
+            "active": false
         },
         {
             "abilities": [
@@ -114,7 +113,8 @@ function HomePage({ onChangePage }) {
                 "right": 4,
                 "bottom": 2,
                 "left": 7
-            }
+            },
+            "active": false
         },
         {
             "abilities": [
@@ -140,54 +140,42 @@ function HomePage({ onChangePage }) {
                 "right": 6,
                 "bottom": 1,
                 "left": 4
-            }
+            },
+            "active": false
         }
-    ]
-    const handlerClickButton = (page) => {
-        onChangePage && onChangePage(page)
-    }
-    return (
-        <>
-            <MenuHeader />
-            <Header
-                title="Pokemon Game"
-                descr="You should try!"
-                onClickButton={handlerClickButton}
-            />
-            <Layout
-                title="Rules"
-                urlBg={bg}>
-                <p>In the game two players face off against one another, one side playing as "blue",
-                the other as "red" on a 3x3 grid.
-                Each player has five cards in a hand and the aim is to capture the opponent's
-                cards by turning them into the player's own color of red or blue.</p>
-                <p>To win, a majority of the total ten cards played (including the one card that is not placed on the board) must be of the player's card color. To do this, the player must capture cards by placing a card adjacent to an opponent's card whereupon the 'ranks' of the sides where the two cards touch will be compared. If the rank of the opponent's card is higher than the player's card, the player's card will be captured and turned into the opponent's color. If the player's rank is higher, the opponent's card will be captured and changed into the player's color instead. </p>
+    ])
 
-            </Layout>
-            <Layout
-                title="Game"
-                colorBg="#edebee">
-                <div className="flex">
-                    {
-                        POKEMONS.map(i =>
-                            <PokemonCard
-                                key={i.id}
-                                id={i.id}
-                                name={i.name}
-                                img={i.img}
-                                type={i.type}
-                                values={i.values} />)
-                    }
-                </div>
-            </Layout>
-            <Layout
-                title="Have fun"
-                urlBg={bg}>
-                <img src={logoIMG} alt="logo"></img>
-            </Layout>
-            <Footer />
-        </>
-    );
+    const history = useHistory();
+    const handlerClickButton = () => {
+        history.push('/')
+    }
+
+    const handlerClickCard = (id) => {
+        const i = Pokemons.findIndex(card => card.id === id);
+        const card = Pokemons[i];
+        setPokemons([...Pokemons.slice(0, i), { ...card, active: !card.active }, ...Pokemons.slice(i + 1)])
+    }
+
+    return (
+        <div>
+            <button onClick={handlerClickButton}>Back to App</button>
+            <div className={style.flex}>
+                {
+                    Pokemons.map(i =>
+                        <PokemonCard
+                            key={i.id}
+                            id={i.id}
+                            name={i.name}
+                            img={i.img}
+                            type={i.type}
+                            values={i.values}
+                            isActive={i.active}
+                            onClickCard={handlerClickCard}
+                        />)
+                }
+            </div>
+        </div>
+    )
 }
 
-export default HomePage;
+export default Game
